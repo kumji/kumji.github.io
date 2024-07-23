@@ -1,45 +1,73 @@
-<html>
-<script src='https://d3js.org/d3.v5.min.js'></script>
-<style> circle {fill: lightblue; stroke: black;} </style>
-<body onload='init()'>
-<svg width=300 height=300>
-</svg>
-<script>
-async function init() {
-
-const data = await d3.csv("https://flunky.github.io/cars2017.csv");
-const svg = d3.select("svg").append("g").attr("transform", "translate(50,50)");
-const xScale = d3.scaleLog().domain([10, 150]).range([0, 200]);
-const yScale = d3.scaleLog().domain([10, 150]).range([200, 0]);
-
-const xAxis = d3.axisBottom(xScale)
-    .tickValues([10, 20, 50, 100])
-    .tickFormat(d3.format("~s"));
-
-const yAxis = d3.axisLeft(yScale)
-    .tickValues([10, 20, 50, 100])
-    .tickFormat(d3.format("~s"));
-
-svg.select("g").attr("transform", "translate(0,200)").call(xAxis);
-svg.select("g").attr("transform", "translate(0,200)").call(yAxis);
-
-svg.selectAll("circle")
-    .data(data)
-    .enter()
-    .append("circle")
-    .attr("cx", d => xScale(d["AverageCityMPG"]))
-    .attr("cy", d => yScale(d["AverageHighwayMPG"]))
-    .attr("r", d => 2 + +d["EngineCylinders"]);
-
-svg.append("g")
-    .attr("transform","translate(50,50)")
-    .call(yAxis);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>World Happiness Report</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://d3js.org/d3.v6.js"></script>
+    <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
     
-svg.append("g")
-    .attr("transform","translate(50,250)")
-    .call(xAxis)
-
-  }
-</script>
+</head>
+<body onload="updateMap()">
+    <div class="header">
+        <h1>World Happiness Report</h1>
+    </div>
+    <div class="report_desc">
+        <br> <h2>ABOUT</h2><br>
+        <p>
+            The World Happ iness Report is a partnership of Gallup, the Oxford Wellbeing Research Centre, the UN Sustainable Development Solutions Network, and the WHR’s Editorial Board. The report is produced under the editorial control of the WHR Editorial Board.
+            The World Happiness Report reflects a worldwide demand for more attention to happiness and well-being as criteria for government policy. 
+            It reviews the state of happiness in the world today and shows how the science of happiness explains personal and national variations in happiness.
+        </p>
+        <br><h2> Ranking of Happiness 2021-2023 </h2>
+        <p>
+            Countries are ranked according to their self-assessed life evaluations (answers to the Cantril ladder question in the Gallup World Poll).
+            The overall length of each country bar in the chart below represents the average response to the ladder question. 
+            The confidence intervals for each country’s average life evaluation are shown by horizontal whiskers at the right-hand end of each country bar. 
+            These ranking ranges are wider where there are many countries with similar averages, and for countries with smaller sample sizes.
+        </p>
+        <p>
+            The chart also includes colour-coded sub-bars in each country row, representing the extent to which six key variables contribute to explaining life 
+            evaluations. These variables are GDP per capita, social support, healthy life expectancy, freedom, generosity, positive affect and negative affect. As already noted, our happiness rankings are not based on any index of these six factors. Rather, scores are based on individuals’ own assessments of their lives, in particular their answers to the single-item Cantril ladder life-evaluation question. We use observed data on the six variables and estimates of their associations with life evaluations to help explain the variation of life evaluations across countries, 
+            much as epidemiologists estimate the extent to which life expectancy is affected by factors such as smoking, exercise, and diet.
+        </p>
+        <div id = "bar-chart"></div>
+        <br><h2>Variable Definitions</h2><br>
+        <h3>Happiness score or subjective well-being (variable name ladder)</h3>
+        <p>
+            The survey measure of SWB is from the February 15, 2024 release of the Gallup World Poll (GWP) covering years from 2005/06 to 2023. Unless stated otherwise, it is the national average response to the question of life evaluations. The English wording of the question is “Please imagine a ladder, with steps numbered from 0 at the bottom to 10 at the top. The top of the ladder represents the best possible life for you and the bottom of the ladder represents the worst possible life for you. On which step of the ladder would you say you personally feel you stand at this time?” This measure is also referred to as Cantril life ladder, or just life ladder in our analysis.
+        </p>
+        <h3>GDP</h3>
+        <p>
+            The statistics of GDP per capita (variable name gdp) in purchasing power parity (PPP) at constant 2017 international dollar prices are from World Development Indicators (WDI, version 23, Metadata last updated on- Sep 27, 2023). T
+        </p>
+        <h3>Social Support</h3>
+        <p>
+            The national average of the binary responses (either 0 or 1) to the GWP question “If you were in trouble, do you have relatives or friends you can count on to help you whenever you need them, or not?”
+        </p>
+        <h3>Healthy</h3>
+        <p>
+            Healthy life expectancies at birth are based on the data extracted from the World Health Organization’s (WHO) Global Health Observatory data repository (Last updated: 2020-12-04).
+        </p>
+        <h3>Freedom</h3>
+        <p>
+            The national average of responses to the GWP question “Are you satisfied or dissatisfied with your freedom to choose what you do with your life?”
+        </p>
+        <h3>Generosity</h3>
+        <p>
+            The residual of regressing national average of response to the GWP question “Have you donated money to a charity in the past month?” on GDP per capita.
+        </p>
+        <h3>Positive_affect</h3>
+        <p>
+            It is defined as the average of three positive affect measures in GWP: laugh, enjoyment and doing interesting things in the Gallup World Poll. These measures are the responses to the following three questions, respectively: “Did you smile or laugh a lot yesterday?”, and “Did you experience the following feelings during A LOT OF THE DAY yesterday? How about Enjoyment?”, “Did you learn or do something interesting yesterday?”
+        </p>
+        <h3>Negative_affect</h3>
+        <p>
+            It is defined as the average of three negative affect measures in GWP. They are worry, sadness and anger, respectively the responses to “Did you experience the following feelings during A LOT OF THE DAY yesterday? How about Worry?”, “Did you experience the following feelings during A LOT OF THE DAY yesterday? How about Sadness?”, and “Did you experience the following feelings during A LOT OF THE DAY yesterday? How about Anger?”
+        </p>
+    </div>
+    
+    <script src="counrty_map.js"></script>
+    <script src="bar-chart.js"></script>
 </body>
-</html>

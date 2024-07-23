@@ -1,0 +1,159 @@
+body {
+    font-family: Arial;
+
+  }
+  
+  /* Header/Logo Title */
+  .header {
+    padding: 5px;
+    text-align: center;
+    background: #1abc9c;
+    color: white;
+    font-size: 20px;
+  }
+
+  h1{
+    text-align: center;
+  }
+  
+  .report_desc{
+    font-size:18px;
+    padding-left: 20px;
+    padding-right: 20px;
+    line-height:0.3in;
+    color: #262626;
+    margin-left:50px;
+    margin-right: 50px;
+    text-align: justify;
+  }
+  
+  div.tooltip {
+      position: absolute;
+      text-align: left;
+      color: black;
+      width: 160px;
+      height: 40px;
+      padding: 2px;
+      font: 14px sans-serif;
+      background: rgb(245, 249, 254);
+      border: 0px;
+      pointer-events: none;
+    }
+  
+  #My_Map
+  {
+      padding-top:0px;
+  }
+  
+  .MapB {
+      background-color: white;
+      border: 2px solid black;
+      color: green;
+      padding: 5px 10px;
+      text-align: center;
+      display: inline-block;
+      font-size: 20px;
+      margin: 10px 30px;
+      cursor: pointer;
+  }
+  
+  .years {
+      text-align: right;
+      background: #ffffff;
+      font-size: 25px;
+      ;
+    }
+  
+  .yrselect{
+      width: 100px;
+      font-size: 25px;
+      color: rgba(0, 0, 0, 0.975);
+      background-color:rgba(255, 255, 255, 0.976);
+      border: #ffffff;
+  }
+  
+  .yrchange{
+    font-size: 12px;
+    font-style: italic;
+    color:gray;
+  }
+
+  .selchange{
+    font-size: 12px;
+    font-style: italic;
+    color:gray;
+    text-align: center;
+  }
+  
+  
+  input[type="button"]{
+      height: 30px;
+      font-size: large;
+      display: inline-block;
+      cursor: pointer;
+      border: 1px solid black;
+      color: green;
+      background-color: white;
+  }
+  
+  .mapform{
+      text-align: center;
+  }
+  
+  
+  .map1radio{
+    margin-left: 60px;
+    margin-right: 60px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  .map1radio input[type="radio"] {
+    opacity: 0;
+    position: fixed;
+    width: 0;
+  }
+  .map1radio label {
+    display: inline-block;
+    background-color:#1abc9c;
+    padding: 10px 20px;
+    font-family: sans-serif, Arial;
+    color:#ffffff;
+    font-size: 17px;
+    border: 1px solid #666;
+    border-radius: 4px;
+    width:130px;
+    text-align: center;
+  }
+  .map1radio label:hover {
+    background-color: #b1e3c1;
+    cursor: pointer;
+  }
+  .map1radio input[type="radio"]:focus + label {
+    border: 2px dashed #666;
+  }
+  .map1radio input[type="radio"]:checked + label {
+    background-color:rgb(111, 198, 241);
+    border-color: rgb(53, 52, 52);
+  }
+
+  rect.mover {
+    stroke: red;
+    stroke-opacity: .4;
+    fill: rgb(192, 234, 38);
+    fill-opacity: 0.5;
+}
+#AllCountry{
+    margin-left: 80px;
+    transform: rotate(90deg);
+    transform-origin:right,center;
+}
+.report_map{
+    font-size:18px;
+    line-height:0.3in;
+    color: #262626;
+    text-align: justify;
+  }
+
+.visual{
+    border: 1px solid black;
+}
