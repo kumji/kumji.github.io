@@ -9,7 +9,7 @@
     <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
     
 </head>
-<body>
+<body onload="updateChart()">
     <div class="header">
         <h1>World Happiness Report</h1>
     </div>
@@ -20,60 +20,98 @@
             The World Happiness Report reflects a worldwide demand for more attention to happiness and well-being as criteria for government policy. 
             It reviews the state of happiness in the world today and shows how the science of happiness explains personal and national variations in happiness.
         </p>
-        <h2>Variable Definitions</h2>
-        <h3>1) Happiness score or subjective well-being (variable name ladder)</h3>
-        <p>
-            The survey measure of SWB is from the February 15, 2024 release of the Gallup World Poll (GWP) covering years from 2005/06 to 2023. Unless stated otherwise, it is the national average response to the question of life evaluations. The English wording of the question is “Please imagine a ladder, with steps numbered from 0 at the bottom to 10 at the top. The top of the ladder represents the best possible life for you and the bottom of the ladder represents the worst possible life for you. On which step of the ladder would you say you personally feel you stand at this time?” This measure is also referred to as Cantril life ladder, or just life ladder in our analysis.
-        </p>
-        <h3>2) GDP</h3>
-        <p>
-            The statistics of GDP per capita (variable name gdp) in purchasing power parity (PPP) at constant 2017 international dollar prices are from World Development Indicators (WDI, version 23, Metadata last updated on- Sep 27, 2023). T
-        </p>
-        <h3>3) Social Support</h3>
-        <p>
-            The national average of the binary responses (either 0 or 1) to the GWP question “If you were in trouble, do you have relatives or friends you can count on to help you whenever you need them, or not?”
-        </p>
-        <h3>4) Healthy</h3>
-        <p>
-            Healthy life expectancies at birth are based on the data extracted from the World Health Organization’s (WHO) Global Health Observatory data repository (Last updated: 2020-12-04).
-        </p>
-        <h3>5) Freedom</h3>
-        <p>
-            The national average of responses to the GWP question “Are you satisfied or dissatisfied with your freedom to choose what you do with your life?”
-        </p>
-        <h3>6) Generosity</h3>
-        <p>
-            The residual of regressing national average of response to the GWP question “Have you donated money to a charity in the past month?” on GDP per capita.
-        </p>
-        <h3>7) Positive_affect</h3>
-        <p>
-            It is defined as the average of three positive affect measures in GWP: laugh, enjoyment and doing interesting things in the Gallup World Poll. These measures are the responses to the following three questions, respectively: “Did you smile or laugh a lot yesterday?”, and “Did you experience the following feelings during A LOT OF THE DAY yesterday? How about Enjoyment?”, “Did you learn or do something interesting yesterday?”
-        </p>
-        <h3>8) Negative_affect</h3>
-        <p>
-            It is defined as the average of three negative affect measures in GWP. They are worry, sadness and anger, respectively the responses to “Did you experience the following feelings during A LOT OF THE DAY yesterday? How about Worry?”, “Did you experience the following feelings during A LOT OF THE DAY yesterday? How about Sadness?”, and “Did you experience the following feelings during A LOT OF THE DAY yesterday? How about Anger?”
-        </p>
-        <h2> Eight Key Variables For Top20 Happiest Countries </h2>
-        <p>
-            A chart below includes colour-coded sub-bars in each country row, representing the extent to which eight key variables contribute to explaining life 
-            evaluations. These variables are GDP per capita, social support, healthy life expectancy, freedom, generosity, positive affect and negative affect. As already noted, our happiness rankings are not based on any index of these eight factors. Rather, scores are based on individuals’ own assessments of their lives, in particular their answers to the single-item Cantril ladder life-evaluation question. We use observed data on the eight variables and estimates of their associations with life evaluations to help explain the variation of life evaluations across countries, 
-            much as epidemiologists estimate the extent to which life expectancy is affected by factors such as smoking, exercise, and diet. 
-            As already noted, our happiness rankings are not based on any index of these six factors. Rather, scores are based on individuals’ own assessments of their lives, in particular  their answers to the single-item Cantril ladder life-evaluation question.
-        </p>
-        <div id = "bar-chart3" style="width: 80%; float:left"></div>
-        <div id = "legend" style="width: 20%; float:left"></div>
-        <h2> Ranking of Happiness in 2023 </h2>
+        <h2> Happiness Score And Other Key Variables </h2>
         <p>
             Countries are ranked according to their self-assessed life evaluations (answers to the Cantril ladder question in the Gallup World Poll).
             The overall length of each country bar in the chart below represents the average response to the ladder question. 
-            The confidence intervals for each country’s average life evaluation are shown by horizontal whiskers at the right-hand end of each country bar. 
-            These ranking ranges are wider where there are many countries with similar averages, and for countries with smaller sample sizes.
         </p>
         <div id = "bar-chart1" style="width: 50%; float:left"></div>
         <div id = "bar-chart2" style="width: 50%; float:right"></div>
+    
+        <p>
+            A chart below includes colour-coded sub-bars in each country row, representing the extent to which seven key variables contribute to explaining life 
+            evaluations. These variables are GDP per capita, social support, healthy life expectancy, freedom, generosity, positive affect and negative affect.
+            As already noted, our happiness rankings are not based on any index of these seven factors.
+            Rather, scores are based on individuals’ own assessments of their lives, in particular their answers to the single-item Cantril ladder life-evaluation question. 
+            We use observed data on the eight variables and estimates of their associations with life evaluations to help explain the variation of life evaluations across countries, 
+            much as epidemiologists estimate the extent to which life expectancy is affected by factors such as smoking, exercise, and diet. 
+            As already noted, our happiness rankings are not based on any index of these six factors. Rather, scores are based on individuals’ own assessments of their lives, in particular  their answers to the single-item Cantril ladder life-evaluation question.
+        </p>
+        <div style="text-align: center">
+            <p style="font-size:85%; color:gray; margin-left: 50px">
+                Seven Key Variables For Top 20 Happiest Countries
+            </p>
+        </div>
+        <div class="wrapper">
+            <div id = "bar-chart3" style="width: 80%; float:right"></div>
+            <div id = "legend" style="width: 20%; float:left"></div>
+        </div>
+
+        <h2> Explore More Data By Key Variables Over 10 years </h2>
+
+        <div id="keyRadio" style="margin-left: 120px">
+            <form>
+                <input type="radio" id="HHappiness" checked name="keyValue" value="Happiness" style="visibility:hidden;" onclick="updateChart()">
+                    <label id="HHappiness" for="HHappiness">Happiness</label>
+                <input type="radio" id="HGDP" name="keyValue" value="GDP" style="visibility:hidden;" onclick="updateChart()">
+                    <label id="HGDP" for="HGDP">GDP</label>
+                <input type="radio" id="HSocial" name="keyValue" value="Social_support" style="visibility:hidden;" onclick="updateChart()">
+                    <label id="HSocial" for="HSocial">Social Support</label>
+                <input type="radio" id="HHealthy" name="keyValue" value="Healthy" style="visibility:hidden;" onclick="updateChart()">
+                    <label id="HHealthy" for="HHealthy">Healthy</label>
+                <input type="radio" id="HFreedom" name="keyValue" value="Freedom" style="visibility:hidden;" onclick="updateChart()">
+                    <label id="HFreedom" for="HFreedom">Freedom</label>
+                <input type="radio" id="HGenerosity" name="keyValue" value="Generosity" style="visibility:hidden;" onclick="updateChart()">
+                    <label id="HGenerosity" for="HGenerosity">Generosity</label>
+                <input type="radio" id="HPositive" name="keyValue" value="Positive_affect" style="visibility:hidden;" onclick="updateChart()">
+                    <label id="HPositive" for="HPositive">Positive Affect</label>
+                <input type="radio" id="HNegative" name="keyValue" value="Negative_affect" style="visibility:hidden;" onclick="updateChart()">
+                    <label id="HNegative" for="HNegative">Negative Affect</label>
+    
+            </form>
+        </div>
+        <div id = "definition" style="text-align: center;"></div>
+        <div style="text-align: center;">
+            <div style="display:inline-block">
+                <p style="font-size:85%; color:gray;">
+                    Top 10  
+                </p>
+            </div>
+            <div style="display:inline-block">
+                <p id="keyword" style="font-size:85%; color:gray;">
+                </p>
+            </div>
+            <div style="display:inline-block">
+                <p style="font-size:85%; color:gray;">
+                    Score Countries In 
+                </p>
+            </div>
+
+            <div style="display:inline-block; margin-left: 5px; margin-top: 10px">
+                <form class="years">
+                    <select id="yearOption" name="year" onchange="updateChart()">
+                        <option value="2014">2014</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+        <div id = "bar-chart4" style="text-align:center;"></div>
+        <div id = "map" style="text-align:center;"></div>
+        
+  
+    
     </div>
-<!--     
-    <script src="counrty_map.js"></script> -->
-    <script src="bar_chart1.js"></script>
-    <script src="bar_chart2.js"></script>
+
+    <script src="bar_chart1_2.js"></script>
+    <script src="bar_chart3.js"></script>
+    <script src="bar_chart4.js"></script>
 </body>

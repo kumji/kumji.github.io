@@ -4,15 +4,15 @@ var margin = {top: 10, right: 30, bottom: 20, left: 50},
     height = 400 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
-var svg1 = d3.select("#bar-chart3")
+var svg3 = d3.select("#bar-chart3")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom+100)
+    .attr("height", height + margin.top-20 + margin.bottom+100)
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
-var svg2 = d3.select("#legend")
+var svg4 = d3.select("#legend")
   .append("svg")
     .attr("width", 150 + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom+100)
@@ -37,9 +37,10 @@ d3.csv("https://raw.githubusercontent.com/kumji/kumji.github.io/main/data/data.c
         });
         happy20 = data.slice(0,20);
 
-        console.log(happy20)
-
         var subgroups = Object.keys(data[0]).slice(2)
+        const index = subgroups.indexOf("Happiness");
+        subgroups.splice(index,1);
+        console.log(subgroups)
 
     // Happy Chart
     var countries = d3.map(happy20, function(d){return(d.Country)});
@@ -48,7 +49,7 @@ d3.csv("https://raw.githubusercontent.com/kumji/kumji.github.io/main/data/data.c
         .domain(countries)
         .range([0, width])
         .padding([0.2])
-    svg1.append("g")
+    svg3.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x).tickSizeOuter(0))
         .selectAll("text") 
@@ -65,7 +66,7 @@ d3.csv("https://raw.githubusercontent.com/kumji/kumji.github.io/main/data/data.c
     var y = d3.scaleLinear()
         .domain([0,100])
         .range([ height, 0 ]);
-    svg1.append("g")
+    svg3.append("g")
         .call(d3.axisLeft(y));
 
     var color = d3.scaleOrdinal()
@@ -91,7 +92,7 @@ d3.csv("https://raw.githubusercontent.com/kumji/kumji.github.io/main/data/data.c
 
     var mouseover = function(d) {
         var selectedData = d3.select(this).data()[0].data;
-        let text = "Country: " + selectedData.Country + "<br>Happiniess: " + selectedData.Happiness
+        let text = "Country: " + selectedData.Country
                 + "<br>GDP: " + selectedData.GDP + "<br>Social Support: " + selectedData.Social_support
                 + "<br>Healthy: " + selectedData.Healthy + "<br>Freedom: " + selectedData.Freedom
                 + "<br>Generosity: " + selectedData.Generosity + "<br>Positive_affect: " + selectedData.Positive_affect
@@ -101,7 +102,6 @@ d3.csv("https://raw.githubusercontent.com/kumji/kumji.github.io/main/data/data.c
             .style("opacity", 1)
     }
     var mousemove = function(d) {
-        console.log(event.pageX)
         tooltip
         .style("left", (event.pageX) + "px")
         .style("top", (event.pageY) + "px")
@@ -112,7 +112,7 @@ d3.csv("https://raw.githubusercontent.com/kumji/kumji.github.io/main/data/data.c
     }
     
 
-    svg1.append("g")
+    svg3.append("g")
         .selectAll("g")
         .data(stackedData)
         .enter().append("g")
@@ -130,7 +130,7 @@ d3.csv("https://raw.githubusercontent.com/kumji/kumji.github.io/main/data/data.c
         .domain(countries)
         .range([0, width])
         .padding([0.2])
-    svg1.append("g")
+    svg3.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x).tickSizeOuter(0))
         .selectAll("text") 
@@ -147,19 +147,19 @@ d3.csv("https://raw.githubusercontent.com/kumji/kumji.github.io/main/data/data.c
     var y = d3.scaleLinear()
         .domain([0,100])
         .range([ height, 0 ]);
-    svg1.append("g")
+    svg3.append("g")
         .call(d3.axisLeft(y));
 
     var color = d3.scaleOrdinal()
         .domain(subgroups)
-        .range(['#e41a1c','#377eb8','#4daf4a', '#81EAF1', '#92F181', '#F7940D', '#F70DF7'])
+        .range(['#F70DF7','#B76BF2','#377eb8','#4daf4a', '#81EAF1', '#92F181', '#F7940D'])
 
 
     var stackedData = d3.stack()
         .keys(subgroups)
         (happy20)
 
-    svg1.append("g")
+    svg3.append("g")
         .selectAll("g")
         .data(stackedData)
         .enter().append("g")
@@ -175,7 +175,7 @@ d3.csv("https://raw.githubusercontent.com/kumji/kumji.github.io/main/data/data.c
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
 
-    svg2.append("g")
+    svg4.append("g")
     .selectAll("g")
     .data(subgroups)
     .enter()
@@ -185,18 +185,16 @@ d3.csv("https://raw.githubusercontent.com/kumji/kumji.github.io/main/data/data.c
     .attr("r", 7)
     .style("fill", function(d){ return color(d)})
 
-    svg2.append("g")
+    svg4.append("g")
     .selectAll("g")
     .data(subgroups)
     .enter()
     .append("text")
-    .attr("x", 20)
+    .attr("x", 15)
     .attr("y", function(d,i){ return 100 + i*25}) 
     .style("fill", function(d){ return color(d)})
     .text(function(d){ return d})
     .attr("text-anchor", "left")
     .style("alignment-baseline", "middle")
-
-
 
 })

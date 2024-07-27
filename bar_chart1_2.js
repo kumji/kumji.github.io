@@ -4,7 +4,7 @@ bwidth = 450 - bmargin.left - bmargin.right,
 bheight = 400 - bmargin.top - bmargin.bottom;
 
 
-var svg3 = d3.select("#bar-chart1")
+let svg1 = d3.select("#bar-chart1")
 .append("svg")
 .attr("width", bwidth + bmargin.left + bmargin.right)
 .attr("height", bheight + bmargin.top + bmargin.bottom)
@@ -13,7 +13,7 @@ var svg3 = d3.select("#bar-chart1")
       "translate(" + bmargin.left + "," + bmargin.top + ")");
 
 
-var svg4 = d3.select("#bar-chart2")
+let svg2 = d3.select("#bar-chart2")
 .append("svg")
 .attr("width", bwidth + bmargin.left + bmargin.right)
 .attr("height", bheight + bmargin.top + bmargin.bottom)
@@ -23,7 +23,7 @@ var svg4 = d3.select("#bar-chart2")
 
 
 // Parse the Data
-csvdata = d3.csv("https://raw.githubusercontent.com/kumji/kumji.github.io/main/data/data.csv")
+var csvdata = d3.csv("https://raw.githubusercontent.com/kumji/kumji.github.io/main/data/data.csv")
 .then(function(csvdata)
 {
 
@@ -51,7 +51,7 @@ csvdata = d3.csv("https://raw.githubusercontent.com/kumji/kumji.github.io/main/d
 var x = d3.scaleLinear()
 .domain([0, 10])
 .range([ 0, bwidth]);
-svg3.append("g")
+svg1.append("g")
 .attr("transform", "translate(0," + bheight + ")")
 .call(d3.axisBottom(x))
 .selectAll("text")
@@ -63,12 +63,12 @@ var y = d3.scaleBand()
 .range([ 0, bheight ])
 .domain(happy10.map(function(d) { return d.Country; }))
 .padding(.1);
-svg3.append("g")
+svg1.append("g")
 .call(d3.axisLeft(y))
 .style("font-size", "0.8em");
 
 
-var chart1 = svg3.selectAll("g")
+var chart1 = svg1.selectAll("g")
             .data(happy10)
             .enter().append("g")
             .attr("class","g1")
@@ -100,7 +100,7 @@ chart1.append("rect")
 var sx = d3.scaleLinear()
 .domain([0, 10])
 .range([ 0, bwidth]);
-svg4.append("g")
+svg2.append("g")
 .attr("transform", "translate(0," + bheight + ")")
 .call(d3.axisBottom(sx))
 .selectAll("text")
@@ -112,11 +112,11 @@ var sy = d3.scaleBand()
 .range([ 0, bheight ])
 .domain(sad10.map(function(d1) { return d1.Country; }))
 .padding(.1);
-svg4.append("g")
+svg2.append("g")
 .call(d3.axisLeft(sy))
 .style("font-size", "0.8em");
 
-var chart2 = svg4.selectAll("g")
+var chart2 = svg2.selectAll("g")
             .data(sad10)
             .enter().append("g")
             .attr("class","g2")
@@ -144,14 +144,14 @@ chart2.append("SadRect")
     .attr("text-anchor","left")
     .style("fill","red")
 
-    svg4.append("text")      
+    svg2.append("text")      
     .attr("x",150)
     .attr("y",-15)
     .style("text-anchor", "middle")
     .text("Top 10 Saddest Countries in 2023")
     .style("fill","gray")
 
-    svg3.append("text")      
+    svg1.append("text")      
     .attr("x",150)
     .attr("y",-15)
     .style("text-anchor", "middle")
