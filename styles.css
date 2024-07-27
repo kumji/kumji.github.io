@@ -84,7 +84,7 @@ body {
   }
 
   #HSocial {
-    background-color:#B76BF2 !important;
+    background-color:#cca4eb !important;
   }
 
   #HHealthy {
@@ -104,7 +104,7 @@ body {
   }
 
   #HNegative {
-    background-color:#F7940D !important;
+    background-color:#f8d19a !important;
   }
   
   #keyRadio input[type="radio"]:focus + label {

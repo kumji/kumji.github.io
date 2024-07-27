@@ -17,7 +17,7 @@ let svg6 = d3.select("#bar-chart4")
     .attr("height", 400)
   .append("g")
     .attr("transform",
-          "translate(100,10)");
+          "translate(100,30)");
 
 const def = {
     'Happiness':'The survey measure of SWB is from the February 15, 2024 release of the Gallup World Poll (GWP) covering years from 2005/06 to 2023. Unless stated otherwise, it is the national average response to the question of life evaluations. The English wording of the question is “Please imagine a ladder, with steps numbered from 0 at the bottom to 10 at the top. The top of the ladder represents the best possible life for you and the bottom of the ladder represents the worst possible life for you. On which step of the ladder would you say you personally feel you stand at this time?” This measure is also referred to as Cantril life ladder, or just life ladder in our analysis.',
@@ -109,45 +109,216 @@ function updateChart() {
             .attr("height", y.bandwidth() )
             .attr("fill", getColor(keyValue))
         
-            chart4.append("text")
+        chart4.append("text")
             .data(top10)
             .enter()
             .append("text")
             .text(function(d) { return d[keyValue]; })
             .attr("x", function(d){return x(d[keyValue]);})
             .attr("y", function(d) { return y(d.Country); })
-            .attr('dy', '1.0em')
+            .attr('dy', '0.8em')
             .attr('dx', '0.7em')
             .attr("text-anchor","left")
-            .style("fill","blue")
+            .style("fill","grey")
+
+        // Finland Happiniess
+        const finannotations = [
+                {
+                    note: { 
+                            label: "Finland had been ranked the happiest country since 2016",
+                            title: "Happiest Country",
+                            wrap: 300,
+                            padding: 10
+                            },
+                    color: ["#292928"],
+                    x: 40,
+                    y: 10,
+                    dy: 20,
+                    dx: 10
+                    
+                }]
+        const finhappy = d3.annotation().annotations(finannotations);
+        
+        if((yearValue>'2015')&&(keyValue=='Happiness')){
+            svg6.append("g")
+                    .style("opacity",1)
+                    .attr("id","fin_annotation")
+                    .style("font-size", 15)
+                    .call(finhappy)
+        } else {
+            d3.select(".fin_annotation").remove()
+        }
+        
+        // Lux GDP
+        const luxannotations = [
+            {
+                note: { 
+                        label: "Luxembourg had been ranked the highest GDP country until 2019 and again in 2022",
+                        title: "The Highest GDP Country",
+                        wrap: 300,
+                        padding: 10
+                        },
+                color: "#292928",
+                x: 40,
+                y: 10,
+                dy: 10,
+                dx: 10
+                
+            }]
+        const luxgdp = d3.annotation().annotations(luxannotations);
+        
+        if((yearValue<'2020' || yearValue=='2022')&&(keyValue=='GDP')){
+            svg6.append("g")
+                    .style("opacity",1)
+                    .attr("id","lux_annotation")
+                    .style("font-size", 15)
+                    .call(luxgdp)
+        } else {
+            d3.select(".lux_annotation").remove()
+        }
+
+        // Ice Social
+        const iceannotations = [
+            {
+                note: { 
+                        label: "Iceland had been the most frequently top 1 ranked for Social support score for the last decade",
+                        title: "The Highest Social Support Score Country",
+                        wrap: 300,
+                        padding: 10
+                        },
+                color: "#292928",
+                x: 40,
+                y: 10,
+                dy: 40,
+                dx: 10
+                
+            }]
+        const iceso = d3.annotation().annotations(iceannotations);
+        
+        if((yearValue=='2016'||(yearValue=='2017')||
+        (yearValue=='2019')||(yearValue=='2020')||
+        (yearValue=='2021')||(yearValue=='2022')||
+        (yearValue=='2023'))&&
+        (keyValue=='Social_support')){
+            svg6.append("g")
+                    .style("opacity",1)
+                    .attr("id","iceannotations")
+                    .style("font-size", 15)
+                    .call(iceso)
+        } else {
+            d3.select(".iceannotations").remove()
+        }
+
+
+        // Jap Healthy
+        const japannotations = [
+            {
+                note: { 
+                        label: "Japan has been ranked as the most healthy country for the last decade",
+                        title: "All-time The Most Healthy Country",
+                        wrap: 300,
+                        padding: 10
+                        },
+                color: "#292928",
+                x: 40,
+                y: 10,
+                dy: 5,
+                dx: 10
+                
+            }]
+        const japhel = d3.annotation().annotations(japannotations);
+        
+        if(keyValue=='Healthy'){
+            svg6.append("g")
+                    .style("opacity",1)
+                    .attr("id","japannotations")
+                    .style("font-size", 15)
+                    .call(japhel)
+        } else {
+            d3.select(".japannotations").remove()
+        }
+
+        // Uzbekistan Freedom
+        const uzbannotations = [
+            {
+                note: { 
+                        label: "Uzbekistan had been the most frequently top 1 ranked for the Freedom score for the last decade",
+                        title: "Most Frequent Freedom Country",
+                        wrap: 300,
+                        padding: 10
+                        },
+                color: "#292928",
+                x: 40,
+                y: 10,
+                dy: 40,
+                dx: 10
+                
+            }]
+        const uzbfree = d3.annotation().annotations(uzbannotations);
+        
+        if((yearValue=='2015'||(yearValue=='2016')||
+        (yearValue=='2017')||(yearValue=='2018')||
+        (yearValue=='2019'))&&
+        (keyValue=='Freedom')){
+            svg6.append("g")
+                    .style("opacity",1)
+                    .attr("id","uzbannotations")
+                    .style("font-size", 15)
+                    .call(uzbfree)
+        } else {
+            d3.select(".uzbannotations").remove()
+        }
+
+         // Generosity
+         const genannotations = [
+            {
+                note: { 
+                        label: "Myanmar and Indonesia had been the most frequently top 1 ranked as the most generous countries for the last decade",
+                        title: "Most Generous Country",
+                        wrap: 300,
+                        padding: 10
+                        },
+                color: "#292928",
+                x: 40,
+                y: 10,
+                dy: 20,
+                dx: 10
+                
+            }]
+        const generosity = d3.annotation().annotations(genannotations);
+        
+        if(keyValue=='Generosity'){
+            svg6.append("g")
+                    .style("opacity",1)
+                    .attr("id","genannotations")
+                    .style("font-size", 15)
+                    .call(generosity)
+        } else {
+            d3.select(".genannotations").remove()
+        }
 
     })
 
 function getColor(keyValue) {
     if (keyValue == 'Happiness') {
-        return '#f7e40d';
+        return '#f5f0b6';
     } else if (keyValue == 'GDP') {
-        return '#F70DF7';
+        return '#f1a7f1';
     } else if (keyValue == 'Social_support') {
-        return '#B76BF2';
+        return '#d9acfb';
     } else if (keyValue == 'Healthy') {
-        return '#377eb8';
+        return '#8abde7';
     } else if (keyValue == 'Freedom') {
-        return '#4daf4a';
+        return '#bbf7b9';
     } else if (keyValue == 'Generosity') {
-        return '#81EAF1';
+        return '#b2ecf0';
     } else if (keyValue == 'Positive_affect') {
-        return '#92F181';
+        return '#c2f7b9';
     } else if (keyValue == 'Negative_affect') {
-        return '#F7940D';
+        return '#f4d5a9';
     }
 
 }
-
-    const color = d3.scaleOrdinal()
-    .domain(Object.keys(def))
-    .range(['#F70DF7','#B76BF2','#377eb8','#4daf4a', '#81EAF1', '#92F181', '#F7940D', '#e41a1c'])
-
 
 
 }
